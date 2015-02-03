@@ -25,16 +25,12 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
-
-    respond_to do |format|
       if @project.save
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
-        format.json { render :show, status: :created, location: @project }
+        redirect_to @project, notice: 'Project was successfully created.'
       else
-        format.html { render :new }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        flash.now[:alert] = "Project has not been created"
+        render :new
       end
-    end
   end
 
   # PATCH/PUT /projects/1
