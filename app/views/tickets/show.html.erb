@@ -6,5 +6,6 @@
 </div>
 <%= @ticket.description %>
 
-<%= link_to "Edit Ticket", edit_project_ticket_path(@project, @ticket) %>
+<%= link_to "Edit Ticket", [:edit, @project, @ticket] %>
+<%= link_to "Delete Ticket", [@project, @ticket], method: :delete %>
 <%= link_to "back", @project %>
