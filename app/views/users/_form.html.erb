@@ -1,0 +1,26 @@
+<%= form_for @user do |f| %>
+  <% if @user.errors.any?  %>
+    <div id='error_explaination'>
+      <h2>提交信息中存在<%=@user.errors.count %>个错误！</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <p>
+    <%= f.label :email, "邮箱"  %>
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :password, "密码"  %>
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation, "密码确认"  %>
+    <%= f.password_field :password_confirmation %>
+  </p>
+  <%= f.submit '提交' %>
+
+<% end %>
