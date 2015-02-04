@@ -23,4 +23,12 @@ feature 'Creating Tickets' do
     expect(page).to have_content("Description can't be blank")
   end 
 
+  scenario "ticket title should more than 10 characters" do
+    fill_in "Title", with: "more than 10 characters"
+    fill_in "Description", with: "it sucks"
+    click_button 'Create Ticket'
+
+    expect(page).to have_content("Ticket has not been created")
+    expect(page).to have_content("Description is too short")
+  end
 end
