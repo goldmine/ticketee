@@ -14,3 +14,10 @@
 <%= link_to 'Back', projects_path %>
 
 <%= link_to "New Ticket", new_project_ticket_path(@project, @ticket) %>
+
+<h2>Tickets</h2>
+<ul>
+  <% @project.tickets.each do |t| %>
+    <li><%= link_to t.title, [@project, t] %></li>
+  <% end %>
+</ul>

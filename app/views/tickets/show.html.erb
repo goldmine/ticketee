@@ -1,6 +1,9 @@
 <h2><%= @project.name %>'s Tickets</h2>
-
-<%= @ticket.title %> <br />
+<div id="ticket">
+   <h2>
+     <%= @ticket.title %>
+  </h2>
+</div>
 <%= @ticket.description %>
 
 <%= link_to "back", @project %>
