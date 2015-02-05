@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :tickets
   end
 
-  resources :users
+  resources :users, :sessions
 
   root 'projects#index'
 
