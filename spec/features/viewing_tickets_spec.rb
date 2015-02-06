@@ -2,8 +2,10 @@ require 'rails_helper'
 
 feature 'viewing tickets' do
   before do
+    user = FactoryGirl.create(:user)
     project = FactoryGirl.create(:project, name: "TextMate 2")
     FactoryGirl.create(:ticket,
+                       user_id: user.id,
                        project: project,
                        title: "Make it shiny",
                        description: "it should more than 10")
@@ -11,6 +13,7 @@ feature 'viewing tickets' do
     project2 = FactoryGirl.create(:project, name: "Internet Explorer")
     FactoryGirl.create(:ticket,
                        project: project2,
+                       user_id: user.id,
                        title: "project2 ticket",
                        description: "it should more than 10")
     visit '/'

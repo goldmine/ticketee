@@ -3,6 +3,9 @@
    <h2>
      <%= @ticket.title %>
   </h2>
+  <div id="author">
+    created by <%= @ticket.user.email %>
+  </div>
 </div>
 <%= @ticket.description %>
 

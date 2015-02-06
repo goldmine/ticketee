@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 feature 'deleting tickets' do
+  let!(:user) { FactoryGirl.create(:user) }
   let!(:project) { FactoryGirl.create(:project) }
-  let!(:ticket) { FactoryGirl.create(:ticket, project: project) }
+  let!(:ticket) { FactoryGirl.create(:ticket, user: user, project: project) }
 
   scenario 'deleting a ticket' do
+    sign_in_as(user)
     visit '/'
     click_link project.name
     click_link ticket.title

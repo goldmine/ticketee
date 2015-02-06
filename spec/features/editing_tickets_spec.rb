@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 feature 'Editing Tickets' do
+  let!(:user) { FactoryGirl.create(:user) }
   let!(:project) { FactoryGirl.create(:project) }
-  let!(:ticket) { FactoryGirl.create(:ticket, project: project) }
+  let!(:ticket) { FactoryGirl.create(:ticket, project: project, user: user) }
 
   before do
+    sign_in_as(user)
     visit '/'
     click_link project.name 
     click_link ticket.title 

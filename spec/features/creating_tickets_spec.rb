@@ -3,10 +3,20 @@ require 'rails_helper'
 feature 'Creating Tickets' do
 
   before do
-    FactoryGirl.create(:project, name: "Internet Explorer")
+    @project = FactoryGirl.create(:project, name: "Internet Explorer")
+    @user = FactoryGirl.create(:user)
     visit '/'
     click_link 'Internet Explorer'
     click_link 'New Ticket'
+    expect(page).to have_content('必须先登录！')
+
+    fill_in '邮箱', with: @user.email
+    fill_in '密码', with: @user.password
+    click_button '提交'
+
+    click_link @project.name
+    click_link 'New Ticket'
+    
   end
 
   scenario "can create a ticket" do
@@ -14,6 +24,9 @@ feature 'Creating Tickets' do
     fill_in 'Description', with: 'My pages are ugly'
     click_button 'Create Ticket'
     expect(page).to have_content('Ticket was successfully created.')
+    within "#ticket #author" do
+      expect(page).to have_content('created by test@test.com')
+    end
   end
 
   scenario "can not create a ticket without a name" do
