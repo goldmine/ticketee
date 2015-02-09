@@ -66,10 +66,4 @@ class ProjectsController < ApplicationController
       params.require(:project).permit(:name, :description)
     end
 
-    def require_admin!
-      require_signin!
-      unless current_user.admin?
-        redirect_to root_url, alert: "你没有权限执行！"
-      end
-    end
 end
