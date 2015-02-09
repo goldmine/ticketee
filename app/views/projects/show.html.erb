@@ -10,7 +10,10 @@
   <%= @project.description %>
 </p>
 
-<%= link_to 'Edit Project', edit_project_path(@project) %> |
+<% admin_only do %>
+  <%= link_to 'Edit Project', edit_project_path(@project) %> |
+  <%= link_to 'Delete Project', project_path(@project), method: :delete %> |
+<% end %>
 <%= link_to 'Back', projects_path %>
 
 <%= link_to "New Ticket", new_project_ticket_path(@project, @ticket) %>
