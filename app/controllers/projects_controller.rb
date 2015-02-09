@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :require_admin!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /projects
@@ -63,5 +64,12 @@ class ProjectsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
       params.require(:project).permit(:name, :description)
+    end
+
+    def require_admin!
+      require_signin!
+      unless current_user.admin?
+        redirect_to root_url, alert: "你没有权限执行！"
+      end
     end
 end

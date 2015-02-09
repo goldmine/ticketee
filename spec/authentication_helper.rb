@@ -7,6 +7,10 @@ module AuthenticationHelpers
     click_button '提交'
     expect(page).to have_content('登录成功！')
   end
+
+  def sign_in(user)
+    session[:user_id] = user.id
+  end
 end
 
 
