@@ -17,8 +17,10 @@ class ApplicationController < ActionController::Base
 
   def require_admin!
     require_signin!
-    unless current_user.admin?
-      redirect_to root_url, alert: "你没有权限执行！"
+    unless current_user.nil?
+      unless current_user.admin?
+        redirect_to root_url, alert: "你没有权限执行！"
+      end
     end
   end
 
