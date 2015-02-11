@@ -19,6 +19,17 @@ feature "creating users" do
       click_button "Create User"
       expect(page).to have_content("User has been created")
     end
+
+    scenario "create an admin user" do
+      fill_in "Email", with: "admin@test.com"
+      fill_in "Password", with: "password"
+      check "Is an admin?"
+      click_button "Create User"
+      expect(page).to have_content("User has been created")
+      within("#users") do
+        expect(page).to have_content("admin@test.com (Admin)")
+      end
+    end
   end
 
 end
