@@ -25,7 +25,7 @@ feature 'Creating Tickets' do
     click_button 'Create Ticket'
     expect(page).to have_content('Ticket was successfully created.')
     within "#ticket #author" do
-      expect(page).to have_content('created by test@test.com')
+      expect(page).to have_content("created by #{@user.email}")
     end
   end
 

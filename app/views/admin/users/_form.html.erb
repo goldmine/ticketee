@@ -21,7 +21,11 @@
     <%= f.label :admin, "Is an admin?"  %>
     <%= f.check_box :admin %>
   </p>
-
-  <%= f.submit %>
+  
+  <% if @user.new_record? %>
+    <%= f.submit 'Create User' %>
+  <% else %>
+    <%= f.submit 'Update User' %>
+  <% end %>
 
 <% end %>
