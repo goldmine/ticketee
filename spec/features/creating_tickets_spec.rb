@@ -5,18 +5,11 @@ feature 'Creating Tickets' do
   before do
     @project = FactoryGirl.create(:project, name: "Internet Explorer")
     @user = FactoryGirl.create(:user)
+    define_permission(@user, 'view', @project)
+    sign_in_as(@user)
     visit '/'
-    click_link 'Internet Explorer'
-    click_link 'New Ticket'
-    expect(page).to have_content('必须先登录！')
-
-    fill_in '邮箱', with: @user.email
-    fill_in '密码', with: @user.password
-    click_button '提交'
-
     click_link @project.name
     click_link 'New Ticket'
-    
   end
 
   scenario "can create a ticket" do

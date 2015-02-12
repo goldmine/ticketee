@@ -16,6 +16,8 @@ feature 'viewing tickets' do
                        user_id: user.id,
                        title: "project2 ticket",
                        description: "it should more than 10")
+    define_permission(user, 'view', project)
+    sign_in_as(user)
     visit '/'
   end
 
