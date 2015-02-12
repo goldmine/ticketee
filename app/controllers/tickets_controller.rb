@@ -2,6 +2,8 @@ class TicketsController < ApplicationController
   before_action :set_project
   before_action :set_ticket, only:[:show, :edit, :update, :destroy] 
   before_action :require_signin!
+  before_action :authorize_create, only:[:new, :create]
+
   def new
     @ticket = @project.tickets.build
   end
@@ -51,5 +53,11 @@ class TicketsController < ApplicationController
 
   def ticket_params
     params.require(:ticket).permit(:title, :description)
+  end
+  
+  def authorize_create
+    if !current_user.admin? && cannot?("create tickets".to_sym, @project)
+      redirect_to @project, alert: 'you do not have permission!'
+    end
   end
 end
