@@ -24,13 +24,13 @@ RSpec.describe TicketsController, :type => :controller do
 
     it 'can not start to create a ticket' do
       get :new, project_id: project.id
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(project_path(project))
       expect(flash[:alert]).to eql('you do not have permission!')
     end
 
     it 'can not create a ticket' do
       post :create, project_id: project.id
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(project_path(project))
       expect(flash[:alert]).to eql('you do not have permission!')
     end
   end
