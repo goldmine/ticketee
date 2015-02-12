@@ -3,8 +3,7 @@ require 'rails_helper'
 feature 'Sign in' do
   scenario 'successfully sign in' do
     user = FactoryGirl.create(:user)
-    visit '/'
-    click_link '登录'
+    visit new_session_path
     fill_in '邮箱', with: user.email 
     fill_in '密码', with: user.password
     click_button '提交'
@@ -14,8 +13,7 @@ feature 'Sign in' do
 
   scenario 'unsuccessfully sign in with wrong information' do
     user = FactoryGirl.create(:user)
-    visit '/'
-    click_link '登录'
+    visit new_session_path
     fill_in '邮箱', with: 'test'
     fill_in '密码', with: user.password
     click_button '提交'

@@ -1,12 +1,12 @@
 class ProjectsController < ApplicationController
   before_action :require_admin!, only: [:new, :create, :edit, :update, :destroy]
-  before_action :require_signin!, only: :show
+  before_action :require_signin!, only: [:index, :show]
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.for(current_user)
   end
 
   # GET /projects/1
@@ -56,11 +56,7 @@ class ProjectsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      if current_user.admin?
-        @project = Project.find(params[:id])
-      else
-        @project = Project.viewable_by(current_user).find(params[:id])
-      end
+      @project = Project.for(current_user).find(params[:id])
     rescue ActiveRecord::RecordNotFound
       flash[:alert] = "Project could not be found"
       redirect_to projects_path

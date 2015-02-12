@@ -2,8 +2,7 @@ require 'rails_helper'
 
 feature 'Signing up' do
   scenario 'successfully sign up' do
-    visit '/'
-    click_link '注册'
+    visit new_user_path
     fill_in '邮箱', with: "test@test.com"
     fill_in '密码', with: "test@test.com"
     fill_in '密码确认', with: "test@test.com"
