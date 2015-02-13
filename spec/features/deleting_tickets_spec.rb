@@ -6,6 +6,7 @@ feature 'deleting tickets' do
   let!(:ticket) { FactoryGirl.create(:ticket, user: user, project: project) }
   before do
     define_permission(user, 'view', project)
+    define_permission(user, 'delete ticket', project)
   end
 
   scenario 'deleting a ticket' do

@@ -45,6 +45,12 @@ RSpec.describe TicketsController, :type => :controller do
       expect(response).to redirect_to(project_path(project))
       expect(flash[:alert]).to eql('you do not have permission!')
     end
+
+    it 'can not delete a ticket' do
+      delete :destroy, { id: ticket.id, project_id: project.id }
+      expect(response).to redirect_to(project_path(project))
+      expect(flash[:alert]).to eql('you do not have permission!')
+    end
   end
 
 
