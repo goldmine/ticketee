@@ -9,6 +9,10 @@
 </div>
 <%= @ticket.description %>
 
-<%= link_to "Edit Ticket", [:edit, @project, @ticket] %>
-<%= link_to "Delete Ticket", [@project, @ticket], method: :delete %>
+<% authorized?("edit ticket", @project) do %>
+  <%= link_to "Edit Ticket", [:edit, @project, @ticket] %>
+<% end %>
+<% authorized?("delete ticket", @project) do %>
+  <%= link_to "Delete Ticket", [@project, @ticket], method: :delete %>
+<% end %>
 <%= link_to "back", @project %>
