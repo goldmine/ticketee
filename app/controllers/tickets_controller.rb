@@ -1,8 +1,9 @@
 class TicketsController < ApplicationController
+  before_action :require_signin!
   before_action :set_project
   before_action :set_ticket, only:[:show, :edit, :update, :destroy] 
-  before_action :require_signin!
   before_action :authorize_create, only:[:new, :create]
+  before_action :authorize_edit, only:[:edit, :update]
 
   def new
     @ticket = @project.tickets.build
@@ -27,7 +28,7 @@ class TicketsController < ApplicationController
   end
 
   def update
-    if @ticket.update(ticket_params)
+    if @ticket.update_attributes(ticket_params)
       redirect_to [@project, @ticket], notice: "Ticket was successfully updated"
     else
       flash.now[:alert] = "Ticket has not been updated"
@@ -57,6 +58,11 @@ class TicketsController < ApplicationController
   
   def authorize_create
     if !current_user.admin? && cannot?("create".to_sym, @project)
+      redirect_to @project, alert: 'you do not have permission!'
+    end
+  end
+  def authorize_edit
+    if !current_user.admin? && cannot?("edit ticket".to_sym, @project)
       redirect_to @project, alert: 'you do not have permission!'
     end
   end
