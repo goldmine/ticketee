@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
 
+  get 'sessions/logout' , as: :logout
+
   namespace :admin do
     root 'base#index'
-    resources :users
+    resources :users do
+      resources :permissions
+      put "permissions", to: "permissions#set", as: "set_permissions"
+    end
   end
 
   resources :projects do

@@ -58,7 +58,7 @@ class TicketsController < ApplicationController
   end
   
   def authorize_create
-    if !current_user.admin? && cannot?("create".to_sym, @project)
+    if !current_user.admin? && cannot?("create tickets".to_sym, @project)
       redirect_to @project, alert: 'you do not have permission!'
     end
   end

@@ -16,7 +16,7 @@
 <% end %>
 <%= link_to 'Back', projects_path %>
 
-<% authorized?("create", @project) do %>
+<% authorized?("create tickets", @project) do %>
   <%= link_to "New Ticket", new_project_ticket_path(@project, @ticket) %>
 <% end %>
 

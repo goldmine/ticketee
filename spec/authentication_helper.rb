@@ -15,6 +15,10 @@ module AuthenticationHelpers
   def define_permission(user, action, thing)
     Permission.create!(user: user, action: action, thing: thing)
   end
+
+  def check_permission_box(permission, thing)
+    check "permissions_#{thing.id}_#{permission}"
+  end
 end
 
 

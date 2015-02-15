@@ -14,4 +14,9 @@ class SessionsController < ApplicationController
     end
   end
 
+  def logout
+    @current_user = session[:user_id] = nil
+    redirect_to root_url, notice: '退出成功！'
+  end
+
 end

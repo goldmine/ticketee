@@ -37,7 +37,7 @@ feature "hidden links" do
     end
     scenario "New ticket link is shown to a user with permission" do
       define_permission(user,'view', project)
-      define_permission(user,'create', project)
+      define_permission(user,'create tickets', project)
       visit project_path(project)
       expect(page).to have_link("New Ticket")
     end
