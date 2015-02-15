@@ -42,11 +42,18 @@ feature 'Creating Tickets' do
   scenario "Creating ticket with an attachment" do
     fill_in "Title", with: "add document to ticket"
     fill_in "Description", with: "it sucks aaaaaaa"
-    attach_file "File", "spec/fixtures/speed.txt"
+    attach_file "File #1", "spec/fixtures/speed.txt"
+    attach_file "File #2", "spec/fixtures/speed1.txt"
+    attach_file "File #3", "spec/fixtures/speed2.txt"
     click_button 'Create Ticket'
 
-    within("#ticket .asset") do
+    expect(page).to have_content("Ticket was successfully created")
+
+
+    within("#ticket .assets") do
       expect(page).to have_content("speed.txt")
+      expect(page).to have_content("speed1.txt")
+      expect(page).to have_content("speed2.txt")
     end
   end
 end
