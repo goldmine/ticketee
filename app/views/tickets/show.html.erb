@@ -6,8 +6,19 @@
   <div id="author">
     created by <%= @ticket.user.email %>
   </div>
+  <%= @ticket.description %>
+  <% if @ticket.asset.present?  %>
+    <h3>Attachement</h3>
+    <div class="asset">
+      <p>
+        <%= link_to File.basename(@ticket.asset.path), @ticket.asset.url %>
+      </p>
+      <p>
+        <%= @ticket.asset.size %>
+      </p>
+    </div>
+  <% end %>
 </div>
-<%= @ticket.description %>
 
 <% authorized?("edit ticket", @project) do %>
   <%= link_to "Edit Ticket", [:edit, @project, @ticket] %>
