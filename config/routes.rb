@@ -10,11 +10,12 @@ Rails.application.routes.draw do
     end
   end
 
+  
   resources :projects do
     resources :tickets
   end
 
-  resources :users, :sessions
+  resources :users, :sessions, :files
 
   root 'projects#index'
 
