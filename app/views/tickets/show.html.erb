@@ -29,3 +29,19 @@
   <%= link_to "Delete Ticket", [@project, @ticket], method: :delete %>
 <% end %>
 <%= link_to "back", @project %>
+
+<h3>Comments</h3>
+<div id="comments">
+  <% if @ticket.comments.present?  %>
+    <%= @ticket.comments.each do |comment| %>
+      <div>
+        <h4>comment.user</h4>
+        <%= comment.text %>
+      </div>
+    <% end %>
+  <% else %>
+    No comments.
+  <% end %>
+</div>
+
+<%= render "comments/form" %>
