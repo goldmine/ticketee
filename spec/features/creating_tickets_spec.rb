@@ -39,12 +39,14 @@ feature 'Creating Tickets' do
     expect(page).to have_content("Description is too short")
   end
 
-  scenario "Creating ticket with an attachment" do
+  scenario "Creating ticket with an attachment", js: true do
     fill_in "Title", with: "add document to ticket"
     fill_in "Description", with: "it sucks aaaaaaa"
-    attach_file "File #1", "spec/fixtures/speed.txt"
-    attach_file "File #2", "spec/fixtures/speed1.txt"
-    attach_file "File #3", "spec/fixtures/speed2.txt"
+    attach_file "File #1", Rails.root + "spec/fixtures/speed.txt"
+
+    click_link "Add another file"
+    attach_file "File #2", Rails.root + "spec/fixtures/speed1.txt"
+
     click_button 'Create Ticket'
 
     expect(page).to have_content("Ticket was successfully created")
@@ -53,7 +55,6 @@ feature 'Creating Tickets' do
     within("#ticket .assets") do
       expect(page).to have_content("speed.txt")
       expect(page).to have_content("speed1.txt")
-      expect(page).to have_content("speed2.txt")
     end
   end
 end
