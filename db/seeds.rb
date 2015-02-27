@@ -11,4 +11,12 @@ admin_user = User.create(email: "admin@example.com",
                          password_confirmation: "password",
                          admin: true)
 project = Project.create(name: "Ticketee Beta")
-
+State.create(name: "Open",
+             background: "#00cffd",
+             color: "white")
+State.create(name: "New",
+             background: "#85ff00",
+             color: "white")
+State.create(name: "Closed",
+             background: "black",
+             color: "white")

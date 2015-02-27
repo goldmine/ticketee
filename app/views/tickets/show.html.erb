@@ -6,6 +6,7 @@
   <div id="author">
     created by <%= @ticket.user.email %>
   </div>
+  <%= render @ticket.state if @ticket.state %>
   <%= @ticket.description %>
   <% if @ticket.assets.present?  %>
     <h3>Attachements</h3>
@@ -32,16 +33,15 @@
 
 <h3>Comments</h3>
 <div id="comments">
-  <% if @ticket.comments.present?  %>
-    <%= @ticket.comments.each do |comment| %>
+  <% if @ticket.comments.count > 0  %>
+    <% @ticket.comments.each do |comment| %>
       <div>
-        <h4>comment.user</h4>
+        <h4><%= comment.user %></h4>
         <%= comment.text %>
       </div>
     <% end %>
   <% else %>
-    No comments.
+    <h1>no comments</h1>
   <% end %>
 </div>
-
 <%= render "comments/form" %>
