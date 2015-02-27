@@ -10,6 +10,10 @@ admin_user = User.create(email: "admin@example.com",
                          password: "password",
                          password_confirmation: "password",
                          admin: true)
+user = User.create(email: "user@example.com",
+                         password: "password",
+                         password_confirmation: "password"
+                         )
 project = Project.create(name: "Ticketee Beta")
 State.create(name: "Open",
              background: "#00cffd",

@@ -7,6 +7,7 @@ feature "Assigning permissions" do
   let!(:ticket) { FactoryGirl.create(:ticket, project: project, user: user) }
 
   before do
+    FactoryGirl.create(:state, name: 'Open')
     sign_in_as(admin)
     click_link 'Admin'
     click_link 'Users'
@@ -72,6 +73,26 @@ feature "Assigning permissions" do
     click_link 'Delete Ticket'
 
     expect(page).to have_content("Ticket has been destroyed")
+
+  end
+
+  scenario "changing state for a ticket" do
+    check_permission_box "view", project
+    check_permission_box "change_states", project
+    click_button "Update"
+    click_link "退出"
+
+    sign_in_as(user)
+    click_link project.name
+    click_link ticket.title
+    fill_in 'Text', with: 'open a ticket'
+    select 'Open', from: 'State'
+    click_button 'Create Comment'
+
+    expect(page).to have_content("Comment has been created")
+    within("#ticket .state") do
+      expect(page).to have_content('State: Open')
+    end
 
   end
 
