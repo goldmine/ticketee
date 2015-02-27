@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :permissions
       put "permissions", to: "permissions#set", as: "set_permissions"
     end
+    resources :states
   end
 
   

@@ -1,0 +1,24 @@
+<%= form_for [:admin, @state] do |f| %>
+  <% if @state.errors.any?  %>
+    <div id='error_explaination'>
+      <h2>提交信息中存在<%=@state.errors.count %>个错误！</h2>
+      <ul>
+        <% @state.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+  
+  <% if @state.new_record? %>
+    <%= f.submit 'Create State' %>
+  <% else %>
+    <%= f.submit 'Update State' %>
+  <% end %>
+
+<% end %>
