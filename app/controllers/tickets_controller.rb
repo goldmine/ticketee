@@ -12,6 +12,7 @@ class TicketsController < ApplicationController
   end
 
   def create
+    sanitize_parameters!
     @ticket = @project.tickets.build(ticket_params)
     @ticket.user = current_user
     @names = params[:ticket][:tag_names]
@@ -78,7 +79,12 @@ class TicketsController < ApplicationController
   end
   def authorize_delete
     if !current_user.admin? && cannot?("delete ticket".to_sym, @project)
-      redirect_to @project, alert: 'you do not have permission!'
+      redirect_to @sanproject, alert: 'you do not have permission!'
+    end
+  end
+  def sanitize_parameters!
+    if cannot?(:tag, @project)
+      params[:ticket].delete(:tag_names)
     end
   end
 end

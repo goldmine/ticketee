@@ -51,6 +51,23 @@ RSpec.describe TicketsController, :type => :controller do
       expect(response).to redirect_to(project_path(project))
       expect(flash[:alert]).to eql('you do not have permission!')
     end
+
+  end
+
+  context 'standard user can create ticket but cannot tag the ticket' do
+    before do
+      sign_in(user)
+      define_permission(user, 'view', project)
+      define_permission(user, 'create tickets', project)
+    end
+    it 'can create ticket, but cannot tag' do
+      post :create, {ticket: {title: 'new ticket for tag', description: 'it is a new ticket!',
+                             tag_names: 'one two'}, project_id: project.id}
+
+      expect(Ticket.last.title).to eql('new ticket for tag')
+      expect(Ticket.last.tags.first).to eql(nil)
+
+    end
   end
 
 

@@ -35,5 +35,18 @@ RSpec.describe CommentsController, type: :controller do
     end
   end
 
+  context 'user without permission cannot tag the ticket' do
+    before do
+      sign_in(user)
+    end
+
+    it 'cannot tag a ticket when creating comment' do
+      post :create, { comment: { text: 'hacked', tag_names: "one two" },
+                                 ticket_id: ticket.id }
+      ticket.reload
+      expect(ticket.tags.first).to eql(nil)
+    end
+  end
+
 
 end

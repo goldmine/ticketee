@@ -21,5 +21,11 @@
                               selected: @ticket.state_id %>
     </p>
   <% end %>
+
+  <p>
+    <%= label_tag :tag_names %>
+    <%= text_field_tag :tag_names, '', name: "comment[tag_names]" %>
+  </p>
+
   <%= f.submit %>
 <% end %>

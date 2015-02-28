@@ -12,6 +12,7 @@ feature 'creating comments' do
     define_permission(user, :view, project)
     define_permission(user2, :view, project)
     define_permission(user, :"change states", project)
+    define_permission(user, :tag, project)
   end
 
 
@@ -66,4 +67,23 @@ feature 'creating comments' do
     message = "should not see #comment_state_id, but did see it"
     expect(find_element).to raise_error(Capybara::ElementNotFound), message
   end
+
+  scenario 'creating an comment with a tag' do
+    sign_in_as(user)
+    visit '/'
+    click_link project.name
+    click_link ticket.title
+    within('#ticket') do
+      expect(page).to_not have_content('bug')
+    end
+    fill_in 'Text', with: 'added a comment'
+    fill_in 'Tag names', with: 'bug'
+    click_button 'Create Comment'
+    expect(page).to have_content('Comment has been created')
+
+    within('#ticket #tags') do
+      expect(page).to have_content('bug')
+    end
+  end
+
 end

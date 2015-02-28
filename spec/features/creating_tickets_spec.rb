@@ -7,6 +7,7 @@ feature 'Creating Tickets' do
     @user = FactoryGirl.create(:user)
     define_permission(@user, 'view', @project)
     define_permission(@user, 'create tickets', @project)
+    define_permission(@user, 'tag', @project)
     sign_in_as(@user)
     visit '/'
     click_link @project.name
