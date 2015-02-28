@@ -21,6 +21,10 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:text, :state_id)
+    if cannot?(:"change states", @ticket.project)
+      params.require(:comment).permit(:text)
+    else
+      params.require(:comment).permit(:text, :state_id)
+    end
   end
 end
