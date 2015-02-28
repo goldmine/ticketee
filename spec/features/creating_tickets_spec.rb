@@ -57,4 +57,17 @@ feature 'Creating Tickets' do
       expect(page).to have_content("speed1.txt")
     end
   end
+
+  scenario "creating a ticket with tages" do
+    fill_in "Title", with: "more than 10 characters"
+    fill_in "Description", with: "it should able to add tags"
+    fill_in "Tag names", with: "browser visual"
+    click_button 'Create Ticket'
+
+    expect(page).to have_content("Ticket was successfully created")
+    within('#ticket #tags') do
+      expect(page).to have_content("browser")
+      expect(page).to have_content("visual")
+    end
+  end
 end

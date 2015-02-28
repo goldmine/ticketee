@@ -10,6 +10,14 @@
   <%= render @ticket.state if @ticket.state %>
 
   <%= @ticket.description %>
+
+  <% if @ticket.tags.present? %>
+    <h3>Tags</h3>
+    <div id="tags">
+      <%= render @ticket.tags %>
+    </div>
+  <% end %>
+
   <% if @ticket.assets.present?  %>
     <h3>Attachements</h3>
     <div class="assets">

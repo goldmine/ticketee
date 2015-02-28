@@ -14,6 +14,12 @@ class TicketsController < ApplicationController
   def create
     @ticket = @project.tickets.build(ticket_params)
     @ticket.user = current_user
+    @names = params[:ticket][:tag_names]
+    if @names
+      @names.split(" ").each do |name|
+        @ticket.tags << Tag.find_or_create_by(name: name)
+      end
+    end
 
     if @ticket.save
       redirect_to [@project, @ticket], notice: "Ticket was successfully created."
