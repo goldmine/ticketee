@@ -28,6 +28,10 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'cancancan'
 gem 'carrierwave'
+gem 'searcher', github: 'radar/searcher'
+
+
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

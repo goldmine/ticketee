@@ -35,6 +35,11 @@ class TicketsController < ApplicationController
     @states = State.all
   end
 
+  def search
+    @tickets = @project.tickets.search("tag:#{params[:Search]}")
+    render 'projects/show'
+  end
+
   def edit
   end
 

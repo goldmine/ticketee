@@ -15,14 +15,21 @@
   <%= link_to 'Delete Project', project_path(@project), method: :delete %> |
 <% end %>
 <%= link_to 'Back', projects_path %>
+<div>
+  <%= form_tag search_project_tickets_path(@project), method: :get do %>
+    <%= label_tag 'Search' %>
+    <%= text_field_tag 'Search' %>
+    <%= submit_tag 'Search' %>
+  <% end %>
+</div>
 
 <% authorized?("create tickets", @project) do %>
   <%= link_to "New Ticket", new_project_ticket_path(@project, @ticket) %>
 <% end %>
 
 <h2>Tickets</h2>
-<ul>
-  <% @project.tickets.each do |t| %>
+<ul id="tickets">
+  <% @tickets.each do |t| %>
     <li><%= link_to t.title, [@project, t] %></li>
   <% end %>
 </ul>
