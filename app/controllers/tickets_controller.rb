@@ -83,7 +83,7 @@ class TicketsController < ApplicationController
     end
   end
   def sanitize_parameters!
-    if cannot?(:tag, @project)
+    if !current_user.admin? && cannot?("tag".to_sym, @project)
       params[:ticket].delete(:tag_names)
     end
   end
