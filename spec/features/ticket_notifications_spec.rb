@@ -30,4 +30,27 @@ feature 'Ticket Notifications' do
     end
   end
 
+  scenario "comment authors are automaticlly subscribed a ticket" do
+    click_link project.name
+    click_link ticket.title
+    fill_in 'comment_text', with: "bob's comment"
+    click_button 'Create Comment'
+    expect(page).to have_content('Comment has been created')
+    find_email!(alice.email)
+    click_link "退出"
+
+    reset_mailer
+    sign_in_as(alice)
+    click_link project.name
+    click_link ticket.title
+    fill_in "comment_text", with: "alice reply bob"
+    click_button 'Create Comment'
+    expect(page).to have_content('Comment has been created')
+    find_email!(bob.email)
+    expect { find_email!(alice.email) }.to raise_error
+
+
+
+  end
+
 end
