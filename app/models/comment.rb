@@ -1,6 +1,6 @@
 class Comment < ActiveRecord::Base
   before_create :set_previous_state
-  after_create :set_ticket_state
+  after_create :set_ticket_state,:comment_notification
 
   belongs_to :ticket
   belongs_to :user
@@ -17,6 +17,11 @@ class Comment < ActiveRecord::Base
   end
   def set_previous_state
     self.previous_state = self.ticket.state
+  end
+  def comment_notification
+    (self.ticket.watchers - [self.user]).each do |user|
+      Notifier.comment_updated(self, user).deliver_now
+    end
   end
 
 end

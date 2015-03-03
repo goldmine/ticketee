@@ -4,6 +4,7 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
+require 'email_spec'
 
 require 'authentication_helper'
 
@@ -64,5 +65,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.include AuthenticationHelpers, type: :feature
   config.include AuthenticationHelpers, type: :controller
+  config.include EmailSpec::Helpers
+  config.include EmailSpec::Matchers
 
 end
