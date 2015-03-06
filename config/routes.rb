@@ -36,6 +36,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    namespace :v1 do
+      resources :projects
+    end
+  end
+
   resources :users, :sessions, :files
 
   root 'projects#index'

@@ -7,6 +7,7 @@ require 'capybara/rspec'
 require 'email_spec'
 
 require 'authentication_helper'
+require 'api_helper'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -63,8 +64,8 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
-  config.include AuthenticationHelpers, type: :feature
-  config.include AuthenticationHelpers, type: :controller
+  config.include AuthenticationHelpers
+  config.include ApiHelpers, type: :api
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
 
