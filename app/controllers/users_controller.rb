@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def create
     @user = User.create(user_params)
     if @user.save
-      session[:user_id] = @user.id
+      cookies[:auth_token] = @user.auth_token
       redirect_to root_path, notice: '注册成功！'
     else
       flash.now[:alert] = '注册信息有误，请重试！'
