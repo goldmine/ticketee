@@ -1,5 +1,5 @@
 class Api::V1::BaseController < ActionController::Base
-  before_filter :authenticate_user
+  before_action :authenticate_user, :check_rate_limit
 
   private
   def authenticate_user
@@ -8,6 +8,14 @@ class Api::V1::BaseController < ActionController::Base
       respond_to do |format|
         format.json { render json: { error: "token is invalid" } }
       end
+    end
+  end
+
+  def check_rate_limit
+    if @current_user.request_count > 100
+      render json: { error: "Rate limit exceeded" }, status: 403
+    else
+      @current_user.increment!(:request_count)
     end
   end
 

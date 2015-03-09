@@ -50,6 +50,17 @@ RSpec.describe User, :type => :model do
       expect(u).to be_valid
     end
   end
+
+  describe 'request_count' do
+    let!(:user) { FactoryGirl.create(:user) }
+
+    it 'resets user requrest count' do
+      user.update_attributes({"request_count" => 42})
+      User.reset_request_count
+      user.reload
+      expect(user.request_count).to eql(0)
+    end
+  end
 end
 
 

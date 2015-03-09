@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
   has_many :comments
   validates :email, presence: true
 
+  def self.reset_request_count
+    update_all("request_count = 0 where request_count > 0")
+  end
 
   def to_s
     "#{email} (#{admin ? "Admin" : "User"})"
@@ -20,4 +23,5 @@ class User < ActiveRecord::Base
   def create_auth_token
     generate_token(:auth_token)
   end
+
 end
