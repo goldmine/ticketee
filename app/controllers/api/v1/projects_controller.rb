@@ -18,6 +18,11 @@ class Api::V1::ProjectsController < Api::V1::BaseController
     end
   end
 
+  def show
+    @project = Project.find(params[:id])
+    render json: @project, methods: "last_ticket"
+  end
+
   private
   def project_params
     params.require(:project).permit(:name)

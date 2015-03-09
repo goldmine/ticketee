@@ -20,7 +20,7 @@ class Ticket < ActiveRecord::Base
 
   private
   def creator_watches_me
-    if User
+    if user
       self.watchers << user unless self.watchers.include?(user)
     end
   end
