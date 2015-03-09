@@ -1,5 +1,6 @@
 class Api::V1::ProjectsController < Api::V1::BaseController
   before_action :authorize_admin, only: :create
+  before_action :find_project, only: :show
   def index
     @projects = Project.for(current_user).all
     respond_to do |format|
@@ -32,5 +33,11 @@ class Api::V1::ProjectsController < Api::V1::BaseController
       error = { "error" => "You must be an admin to do that" }
       render json: error.to_json, status: 401
     end
+  end
+  def find_project
+    @project = Project.for(current_user).find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    error = { "error" => "The project could not be found" }
+    render json: error.to_json, status: 404
   end
 end
