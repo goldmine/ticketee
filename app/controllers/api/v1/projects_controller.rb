@@ -1,6 +1,6 @@
 class Api::V1::ProjectsController < Api::V1::BaseController
-  before_action :authorize_admin, only: :create
-  before_action :find_project, only: :show
+  before_action :authorize_admin, only: [:create, :update]
+  before_action :find_project, only: [:show, :update]
   def index
     @projects = Project.for(current_user).all
     respond_to do |format|
@@ -20,8 +20,15 @@ class Api::V1::ProjectsController < Api::V1::BaseController
   end
 
   def show
-    @project = Project.find(params[:id])
     render json: @project, methods: "last_ticket"
+  end
+
+  def update
+    if @project.update_attributes(project_params)
+      render json: @project
+    else
+      render json: @project.errors, status: 422
+    end
   end
 
   private

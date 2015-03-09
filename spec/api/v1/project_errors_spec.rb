@@ -26,5 +26,18 @@ describe "project api errors", type: :api do
       expect(last_response.status).to eql(404)
 
     end
+
+    it 'can view project they  have access to' do
+      project = FactoryGirl.create(:project, name: "test project")
+      define_permission(user, 'view', project)
+      url = "/api/v1/projects/#{project.id}"
+      get "#{url}.json", token: user.auth_token
+
+      @project = JSON.parse(last_response.body)
+
+      expect(last_response.status).to eql(200)
+      expect(@project["name"]).to eql("test project")
+
+    end
   end
 end

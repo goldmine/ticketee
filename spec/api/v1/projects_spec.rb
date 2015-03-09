@@ -77,4 +77,28 @@ describe "/api/v1/projects", type: :api do
       expect(ticket_title).to eql("test ticket")
     end
   end
+
+  context 'updating a project' do
+    before do
+      user.admin = true
+      user.save
+    end
+
+    let!(:url) { "/api/v1/projects/#{project.id}" }
+    it 'successful json' do
+      put "#{url}.json", token: token,
+                         project: { name: "test project" }
+      expect(last_response.status).to eql(200)
+      project.reload
+      expect(last_response.body).to eql(project.to_json)
+      expect(project.name).to eql("test project")
+    end
+    it 'unsuccessful json' do
+      put "#{url}.json", token: token,
+                         project: { name: "" }
+      errors = { "name" => ["can't be blank"] }
+      expect(last_response.body).to eql(errors.to_json)
+      expect(last_response.status).to eql(422)
+    end
+  end
 end
