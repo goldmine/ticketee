@@ -1,6 +1,6 @@
 class Api::V1::ProjectsController < Api::V1::BaseController
-  before_action :authorize_admin, only: [:create, :update]
-  before_action :find_project, only: [:show, :update]
+  before_action :authorize_admin, only: [:create, :update, :destroy]
+  before_action :find_project, only: [:show, :update, :destroy]
   def index
     @projects = Project.for(current_user).all
     respond_to do |format|
@@ -29,6 +29,11 @@ class Api::V1::ProjectsController < Api::V1::BaseController
     else
       render json: @project.errors, status: 422
     end
+  end
+
+  def destroy
+    @project.destroy
+    render json: @project, status: 204
   end
 
   private
